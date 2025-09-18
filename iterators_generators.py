@@ -1,5 +1,6 @@
-#custom iterator class - squares upto n
+#Iterators & Generators
 
+#Create a custom iterator class that generates square numbers up to n
 class SquareIterator:
     def __init__(self, n):
         self.n = n
@@ -7,7 +8,7 @@ class SquareIterator:
 
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         if self.current <= self.n:
             result = self.current ** 2
@@ -15,38 +16,48 @@ class SquareIterator:
             return result
         else:
             raise StopIteration
-        
-for num in SquareIterator(5):
-    print(num)
 
-#Fibonacci number using generator
-def fibonacci(limit):
+squares = SquareIterator(5)
+for num in squares:
+    print(num)  
+
+#Write a generator function that yields even numbers up to n
+def even_numbers(n):
+    for i in range(2, n + 1, 2):
+        yield i
+
+for num in even_numbers(10):
+    print(num, end=" ")  
+
+#Implement a generator that yields Fibonacci numbers
+def fibonacci(n):
     a, b = 0, 1
-    while a <= limit:
+    for _ in range(n):
         yield a
-        a, b = b, a+b
+        a, b = b, a + b
 
-for num1 in fibonacci(20):
-    print(num1)
+for num in fibonacci(10):
+    print(num, end=" ")  
 
-# Read a large file line by line using generator
-
-#for thi we should create a text file and copy that file path and replace that instead of file_path in the code.
-def read_large_file(file_path):
-    with open(file_path, "r") as f:
+#Write a generator that reads a large file line by line
+def read_large_file(filename):
+    with open(filename, "r") as f:
         for line in f:
             yield line.strip()
+# create "data.txt" before running:
+for line in read_large_file("data.txt"):
+    print(line)
 
-
-#prime numbers upto n using generators
-def primes_up_to(n):
-    for num in range(2, n+a):
-        for i in range(2, int(num ** 0.5)+1):
+#Create a generator that yields prime numbers up to n
+def prime_numbers(n):
+    for num in range(2, n + 1):
+        is_prime = True
+        for i in range(2, int(num**0.5) + 1):
             if num % i == 0:
+                is_prime = False
                 break
-        else:
+        if is_prime:
             yield num
-for prime in primes_up_to(20):
-    print(prime)
-    
- 
+
+for p in prime_numbers(30):
+    print(p, end=" ") 
